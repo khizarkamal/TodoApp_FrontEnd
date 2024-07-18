@@ -1,55 +1,52 @@
-import React, { useState } from "react";
-import { deleteTodoService } from "../../sevices/todoService";
-import CrossIcon from "../../assets/icon-cross.svg";
+import { useState } from "react";
+import TodoItem from "../todoItem";
+import { ColorRing } from "react-loader-spinner";
+import PropTypes from "prop-types";
 
 const TodoList = ({ todos, allTodos }) => {
-  const [mouseEntered, setMouseEntered] = useState(false);
-
-  const deleteTodo = (id) => {
-    console.log("Id---", id);
-    deleteTodoService(id)
-      .then((resp) => {
-        console.log("Resp---", resp);
-        allTodos();
-      })
-      .catch((err) => {
-        console.log("Error--", err);
-      });
-  };
+  const [loading, setLoading] = useState(false);
 
   if (todos.length < 1) {
     return (
-      <div className="font-josefin text-2xl text-white font-bold text-center mt-8">
+      <div className="font-josefin text-2xl text-white font-bold text-center mt-4">
         Add some todos and get your stuff done !
+      </div>
+    );
+  }
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center">
+        <ColorRing
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="color-ring-loading"
+          wrapperStyle={{}}
+          wrapperClass="color-ring-wrapper"
+          colors={["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]}
+        />
       </div>
     );
   }
 
   return (
-    <div className="mt-8 flex flex-col gap-6">
+    <div className="mt-8 flex flex-col shadow-lg rounded-md overflow-hidden">
       {todos?.map((todo, index) => {
         return (
-          <div
-            onMouseEnter={() => setMouseEntered(true)}
-            onMouseLeave={() => setMouseEntered(false)}
+          <TodoItem
+            setLoading={setLoading}
+            allTodos={allTodos}
             key={index}
-            className=" cursor-pointer flex justify-between items-center bg-dark-desaturatedBlue p-4 rounded-sm text-white font-josefin font-normal"
-          >
-            <span>{todo?.todoText}</span>
-            {mouseEntered && (
-              <span>
-                <img
-                  onClick={() => deleteTodo(todo?._id)}
-                  src={CrossIcon}
-                  alt="cross-icon"
-                />
-              </span>
-            )}
-          </div>
+            {...todo}
+          />
         );
       })}
     </div>
   );
 };
 
+TodoList.propTypes = {
+  todos: PropTypes.array,
+  allTodos: PropTypes.func,
+};
 export default TodoList;

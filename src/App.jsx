@@ -11,8 +11,10 @@ function App() {
           className="w-full h-full object-cover aspect-auto"
         />
       </figure>
-      <div className="mx-4 p-4 max-w-lg md:mx-auto -translate-y-36">
-        <div className=" font-josefin text-4xl text-white tracking-widest mb-8">
+      <div className="mx-4 p-4 max-w-xl md:mx-auto -translate-y-48">
+        <div
+          className={`uppercase font-josefin text-4xl text-white tracking-widest mb-8`}
+        >
           Todo
         </div>
         <Todos />

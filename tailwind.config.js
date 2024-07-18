@@ -9,6 +9,9 @@ export default {
       fontFamily:{
         josefin:['Josefin Sans', 'sans-serif']
       },
+      backgroundImage: {
+        'gradient-custom': 'linear-gradient(to right, hsl(192, 100%, 67%), hsl(280, 87%, 65%))',
+      },
       colors: {
         primary: {
           brightBlue: "hsl(220, 98%, 61%)"
